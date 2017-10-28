@@ -157,10 +157,10 @@ void *list_next(list_iterator_t *iter)
     if(iter->next == NULL){
         return NULL;
     }else{
-    listnode_t *current = iter->next;
+
     iter->next = iter->next->next;
-    return current->item;
-}
+    return iter->next->item;
+    }
 }
 
 
