@@ -30,7 +30,7 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
 
     object->speedx = sx;
     object->speedy = sy;
-    object->ttl = 5000;
+    object->ttl = 5;
 
     object->numtriangles = numtriangles;
     object->model = model;
