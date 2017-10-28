@@ -146,7 +146,7 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
             accelerate_object(object1,boost, maxspeed);
             object1->speedy = object1->speedy * -1;
         }
-
+            list_resetiterator(theIter);
             while((iterObject = (object_t*)list_next(theIter)) != NULL){
               
                 draw_object(iterObject);
