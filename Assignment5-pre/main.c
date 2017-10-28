@@ -148,8 +148,7 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
         }
 
             while(list_next(theIter) != NULL){
-                list_next(theIter);
-                iterObject = theIter->next->item;
+                iterObject = list_next(theIter);
                 
 
                 draw_object(iterObject);
