@@ -58,9 +58,10 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object_t *object1 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object2 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object3 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
+    object_t *iterObject = NULL;
 
     list_t *theList = list_create();
-    list_iterator_t *theIter = list_createiterator()
+    list_iterator_t *theIter = list_createiterator(theList);
 
     
 
@@ -77,12 +78,14 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object3->ty = radius;
     object3->tx = radius;
 
+    list_addlast(list, object3);
+    list_addlast(list, object4);
 
     float gravity = 0.1;
     float boost = 0.8;     
     float maxspeed = 100;
 
-
+    
     while (!done){
         draw_object(object);
         object->speedy += gravity;
@@ -143,6 +146,44 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
             accelerate_object(object1,boost, maxspeed);
             object1->speedy = object1->speedy * -1;
         }
+
+            while(list_next() != NULL){
+                
+                
+
+                draw_object(object1);
+                object1->speedy += gravity;
+                object1->ty += object1->speedy;
+                object1->tx += object1->speedx;
+                object1->rotation += object1->speedx;
+        
+                if(object1->ty >= 900 - radius){
+                    object1->ty = 900 - radius;
+                    accelerate_object(object1, boost, maxspeed);
+                    object1->speedy = object1->speedy * -1;
+                }
+        
+                if(object1->tx >= 1600 - radius){
+                    object1->tx = 1600 - radius;
+                    accelerate_object(object1, boost, maxspeed);
+                    object1->speedx = object1->speedx * -1;
+                }
+        
+                if(object1->tx <= radius){
+                    object1->tx = radius;
+                    accelerate_object(object1, boost, maxspeed);
+                    object1->speedx = object1->speedx * -1;
+                }
+        
+                if(object1->ty <= radius){
+                    object1->ty = radius;
+                    accelerate_object(object1,boost, maxspeed);
+                    object1->speedy = object1->speedy * -1;
+                }
+            }
+            
+
+        
 
         SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
