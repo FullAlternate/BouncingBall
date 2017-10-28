@@ -78,8 +78,8 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object3->ty = radius;
     object3->tx = radius;
 
-    list_addlast(list, object3);
-    list_addlast(list, object4);
+    list_addlast(theList, object2);
+    list_addlast(theList, object3);
 
     float gravity = 0.1;
     float boost = 0.8;     
@@ -147,38 +147,39 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
             object1->speedy = object1->speedy * -1;
         }
 
-            while(list_next() != NULL){
-                
+            while(list_next(theIter) != NULL){
+                list_next(theIter);
+                iterObject = theIter->next->item;
                 
 
-                draw_object(object1);
-                object1->speedy += gravity;
-                object1->ty += object1->speedy;
-                object1->tx += object1->speedx;
-                object1->rotation += object1->speedx;
+                draw_object(iterObject);
+                iterObject->speedy += gravity;
+                iterObject->ty += iterObject->speedy;
+                iterObject->tx += iterObject->speedx;
+                iterObject->rotation += iterObject->speedx;
         
-                if(object1->ty >= 900 - radius){
-                    object1->ty = 900 - radius;
-                    accelerate_object(object1, boost, maxspeed);
-                    object1->speedy = object1->speedy * -1;
+                if(iterObject->ty >= 900 - radius){
+                    iterObject->ty = 900 - radius;
+                    accelerate_object(iterObject, boost, maxspeed);
+                    iterObject->speedy = iterObject->speedy * -1;
                 }
         
-                if(object1->tx >= 1600 - radius){
-                    object1->tx = 1600 - radius;
-                    accelerate_object(object1, boost, maxspeed);
-                    object1->speedx = object1->speedx * -1;
+                if(iterObject->tx >= 1600 - radius){
+                    iterObject->tx = 1600 - radius;
+                    accelerate_object(iterObject, boost, maxspeed);
+                    iterObject->speedx = iterObject->speedx * -1;
                 }
         
-                if(object1->tx <= radius){
-                    object1->tx = radius;
-                    accelerate_object(object1, boost, maxspeed);
-                    object1->speedx = object1->speedx * -1;
+                if(iterObject->tx <= radius){
+                    iterObject->tx = radius;
+                    accelerate_object(iterObject, boost, maxspeed);
+                    iterObject->speedx = iterObject->speedx * -1;
                 }
         
-                if(object1->ty <= radius){
-                    object1->ty = radius;
-                    accelerate_object(object1,boost, maxspeed);
-                    object1->speedy = object1->speedy * -1;
+                if(iterObject->ty <= radius){
+                    iterObject->ty = radius;
+                    accelerate_object(iterObject,boost, maxspeed);
+                    iterObject->speedy = iterObject->speedy * -1;
                 }
             }
             
