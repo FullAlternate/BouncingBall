@@ -147,10 +147,8 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
             object1->speedy = object1->speedy * -1;
         }
 
-            while(list_next(theIter) != NULL){
-                iterObject = list_next(theIter);
-                
-
+            while(iterObject = (object_t*)list_next(theIter) != NULL){
+              
                 draw_object(iterObject);
                 iterObject->speedy += gravity;
                 iterObject->ty += iterObject->speedy;
@@ -183,8 +181,17 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
             }
             
 
+        /*
         
+main.c:150:30: error: assignment makes pointer from integer without a cast [-Werror=int-conversion]
+             while(iterObject = (object_t*)list_next(theIter) != NULL){
+                              ^
+main.c:150:13: error: suggest parentheses around assignment used as truth value [-Werror=parentheses]
+             while(iterObject = (object_t*)list_next(theIter) != NULL){
+             ^
+cc1: all warnings being treated as errors
 
+        */
         SDL_UpdateTexture(texture, NULL, surface->pixels, surface->pitch);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
