@@ -57,10 +57,11 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object_t *object = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object1 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object2 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
+    object_t *object3 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
 
     list_t *theList = list_create();
     list_iterator_t *theIter = list_createiterator()
-    
+
     
 
     float radius = 500 * object->scale;
@@ -71,6 +72,7 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object->tx = radius;
     object1->ty = radius;
     object1->tx = radius;
+
 
     float gravity = 0.1;
     float boost = 0.8;     
