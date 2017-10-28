@@ -72,6 +72,10 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object->tx = radius;
     object1->ty = radius;
     object1->tx = radius;
+    object2->ty = radius;
+    object2->tx = radius;
+    object3->ty = radius;
+    object3->tx = radius;
 
 
     float gravity = 0.1;
