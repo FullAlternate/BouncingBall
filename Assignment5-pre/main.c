@@ -58,6 +58,7 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object_t *object1 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object2 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object3 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
+    object_t *object4 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *iterObject = NULL;
 
     list_t *theList = list_create();
@@ -77,9 +78,14 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object2->tx = radius;
     object3->ty = radius;
     object3->tx = radius;
+    object4->ty = radius;
+    object4->tx = radius;
 
+    list_addlast(theList, object);
+    list_addlast(theList, object1);
     list_addlast(theList, object2);
     list_addlast(theList, object3);
+    list_addlast(theList, object4);
 
     float gravity = 0.1;
     float boost = 0.8;     
@@ -87,6 +93,7 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
 
     
     while (!done){
+        /*
         draw_object(object);
         object->speedy += gravity;
         object->ty += object->speedy;
@@ -145,7 +152,7 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
             object1->ty = radius;
             accelerate_object(object1,boost, maxspeed);
             object1->speedy = object1->speedy * -1;
-        }
+        }*/
             list_resetiterator(theIter);
             while((iterObject = (object_t*)list_next(theIter)) != NULL){
               
@@ -178,7 +185,11 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
                     accelerate_object(iterObject,boost, maxspeed);
                     iterObject->speedy = iterObject->speedy * -1;
                 }
+                if(iterObject->speedx && iterObject->speedy == 0){
+                    list_remove(theList, iterObject);
+                }
             }
+            
             
 
         /*
