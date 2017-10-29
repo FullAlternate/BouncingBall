@@ -186,11 +186,13 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
                     iterObject->speedy = iterObject->speedy * -1;
                 }
                 printf("%f | %f", iterObject->speedx, iterObject->speedy);
-                if(abs(iterObject->speedx) == 0){
-                    iterObject->model = NULL;
-                    destroy_object(iterObject);
-                    list_remove(theList, iterObject);
-                  
+                if(abs(iterObject->speedx) == 0 && abs(iterObject->speedy) == 0){
+                    iterObject->ttl = clock()/CLOCKS_PER_SEC-5;
+                    if(iterObject->ttl <= clock()/CLOCKS_PER_SEC){
+                        iterObject->model = NULL;
+                        destroy_object(iterObject);
+                        list_remove(theList, iterObject);
+                    }
                 
 
                 }
