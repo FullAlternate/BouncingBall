@@ -56,15 +56,15 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     srand((unsigned) time(&t));
     object_t *object = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object1 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
-    object_t *object2 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
+   /* object_t *object2 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object3 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
     object_t *object4 = create_object(surface, sphere_model, SPHERE_NUMTRIANGLES );
-    object_t *iterObject = NULL;
+   */ object_t *iterObject = NULL;
 
     list_t *theList = list_create();
     list_iterator_t *theIter = list_createiterator(theList);
 
-    
+
 
     float radius = 500 * object->scale;
     int done = 0;
@@ -74,19 +74,19 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     object->tx = radius;
     object1->ty = radius;
     object1->tx = radius;
-    object2->ty = radius;
+  /*  object2->ty = radius;
     object2->tx = radius;
     object3->ty = radius;
     object3->tx = radius;
     object4->ty = radius;
     object4->tx = radius;
-
+*/
     list_addlast(theList, object);
     list_addlast(theList, object1);
-    list_addlast(theList, object2);
+  /*  list_addlast(theList, object2);
     list_addlast(theList, object3);
     list_addlast(theList, object4);
-
+*/
     float gravity = 0.1;
     float boost = 0.8;     
     float maxspeed = 100;
@@ -155,7 +155,6 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
         }*/
             list_resetiterator(theIter);
             while((iterObject = (object_t*)list_next(theIter)) != NULL){
-              
                 draw_object(iterObject);
                 iterObject->speedy += gravity;
                 iterObject->ty += iterObject->speedy;
@@ -185,17 +184,22 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
                     accelerate_object(iterObject,boost, maxspeed);
                     iterObject->speedy = iterObject->speedy * -1;
                 }
-                if(abs(iterObject->speedx) == 0 && abs(iterObject->speedy) == 0){
-                iterObject->ttl = clock()/CLOCKS_PER_SEC-15;
-                printf("%d", iterObject->ttl);
-                    if(iterObject->ttl <= clock()/CLOCKS_PER_SEC){
-                        iterObject->model = NULL;
-                        destroy_object(iterObject);
-                        list_remove(theList, iterObject);
-                    }
                 
-
+                if(abs(iterObject->speedx) == 0 && abs(iterObject->speedy) == 0){
+                    
+                    if(iterObject->ttl == 0){
+                        iterObject->ttl = clock()/CLOCKS_PER_SEC+5;
+                    }
+                    printf("%d", iterObject->ttl);
+                        if(iterObject->ttl <= clock()/CLOCKS_PER_SEC){
+                            iterObject->model = NULL;
+                            destroy_object(iterObject);
+                            list_remove(theList, iterObject);
+                        }
+                    
+                        
                 }
+               
             }
             
             
