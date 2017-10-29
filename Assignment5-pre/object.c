@@ -30,7 +30,7 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
 
     object->speedx = sx;
     object->speedy = sy;
-    object->ttl = 5;
+    object->ttl = 0;
 
     object->numtriangles = numtriangles;
     object->model = model;
@@ -43,8 +43,10 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
  * Destroy the object, freeing the memory.
  */
 void destroy_object(object_t *object)
-{
+{   
     free(object);
+    free(object->model);
+    
 }
 
 /*
