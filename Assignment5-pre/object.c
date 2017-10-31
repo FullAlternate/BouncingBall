@@ -13,8 +13,8 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
 {   
 
     //Declares two random floats;
-    int sx = rand() % 30 + 1;
-    int sy = rand() % 30 + 1;
+    int sx = rand() % 60 + 1;
+    int sy = rand() % 60 + 1;
 
     
     //Allocates space for the object and triangles
@@ -30,7 +30,7 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
 
     object->speedx = sx;
     object->speedy = sy;
-    object->ttl = 0;
+    object->ttl = 500; 
 
     object->numtriangles = numtriangles;
     object->model = model;
