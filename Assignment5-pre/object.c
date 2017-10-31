@@ -30,11 +30,13 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
 
     object->speedx = sx;
     object->speedy = sy;
-    object->ttl = 500; 
+    object->ttl = 5000; 
 
     object->numtriangles = numtriangles;
-    object->model = model;
+    memcpy(object->model, model, sizeof(triangle_t) * numtriangles);
     object->surface = surface;
+
+    
 
     return object;
 }
@@ -42,6 +44,7 @@ object_t *create_object(SDL_Surface *surface, triangle_t *model, int numtriangle
 /*
  * Destroy the object, freeing the memory.
  */
+
 void destroy_object(object_t *object)
 {   
     free(object);
@@ -54,7 +57,8 @@ void destroy_object(object_t *object)
  */
 void draw_object(object_t *object)
 {
-    /* Implement me */
+
+    //Draws the triangles who makes up the ball
     int i;
     for(i = 0; i < object->numtriangles; i++){
        object->model[i].tx = object->tx;
