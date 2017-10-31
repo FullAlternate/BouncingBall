@@ -64,7 +64,11 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     list_t *theList = list_create();
     list_iterator_t *theIter = list_createiterator(theList);
 
-
+    const int FRAMES_PER_SECOND = 200;
+    int frame = 0;
+    int delta = 0;
+    int lastFrame = 0;
+    
 
     float radius = 500 * object->scale;
     int done = 0;
@@ -87,9 +91,9 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
     list_addlast(theList, object3);
     list_addlast(theList, object4);
 */
-    float gravity = 0.1;
+    float gravity = 0.3;
     float boost = 0.8;     
-    float maxspeed = 100;
+    float maxspeed = 3000;
 
     
     while (!done){
@@ -160,38 +164,39 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
                 iterObject->ty += iterObject->speedy;
                 iterObject->tx += iterObject->speedx;
                 iterObject->rotation += iterObject->speedx;
-        
+                
                 if(iterObject->ty >= 900 - radius){
-                    iterObject->ty = 900 - radius;
+                    iterObject->ty = 900 - radius-0.1;
                     accelerate_object(iterObject, boost, maxspeed);
                     iterObject->speedy = iterObject->speedy * -1;
                 }
         
                 if(iterObject->tx >= 1600 - radius){
-                    iterObject->tx = 1600 - radius;
+                    iterObject->tx = 1600 - radius-0.1;
                     accelerate_object(iterObject, boost, maxspeed);
                     iterObject->speedx = iterObject->speedx * -1;
                 }
         
                 if(iterObject->tx <= radius){
-                    iterObject->tx = radius;
+                    iterObject->tx = radius+0.1;
                     accelerate_object(iterObject, boost, maxspeed);
                     iterObject->speedx = iterObject->speedx * -1;
                 }
         
                 if(iterObject->ty <= radius){
-                    iterObject->ty = radius;
+                    iterObject->ty = radius+0.1;
                     accelerate_object(iterObject,boost, maxspeed);
                     iterObject->speedy = iterObject->speedy * -1;
                 }
                 
                 if(abs(iterObject->speedx) == 0 && abs(iterObject->speedy) == 0){
                     
-                    if(iterObject->ttl == 0){
-                        iterObject->ttl = clock()/CLOCKS_PER_SEC+5;
+                    if(iterObject->ttl > 0){
+                        iterObject->ttl--;
                     }
-                    printf("%d", iterObject->ttl);
-                        if(iterObject->ttl <= clock()/CLOCKS_PER_SEC){
+                    
+                        if(iterObject->ttl == 0){
+                            printf("%d", iterObject->ttl);
                             iterObject->model = NULL;
                             destroy_object(iterObject);
                             list_remove(theList, iterObject);
@@ -199,7 +204,12 @@ void bouncing_balls(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Surface *s
                     
                         
                 }
-               
+                frame = SDL_GetTicks();
+                delta = frame - lastFrame;
+                lastFrame = frame;
+                if(delta < 1000 / FRAMES_PER_SECOND) { 
+                    SDL_Delay(  (1000/FRAMES_PER_SECOND) - delta); 
+                }
             }
             
             
@@ -260,6 +270,8 @@ int main(void)
         goto error;
     }
 
+
+    SDL_GetTicks();
     /* Create window renderer */
     renderer = SDL_CreateRenderer(window, -1, 0);
     if(!renderer) {
